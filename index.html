@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Specification Analyzer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-project-diagram"></i> API Specification Analyzer</h1>
+            <p>Extract API details from Swagger 2.0 or OpenAPI 3.0 specifications via URL or file upload</p>
+        </header>
+        
+        <section class="input-section">
+            <div class="input-container">
+                <div class="input-group">
+                    <label>Enter Swagger/OpenAPI URL</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-link"></i>
+                        <input type="url" id="apiUrl" placeholder="https://example.com/api-docs.json" value="https://petstore3.swagger.io/api/v3/openapi.json">
+                        <button id="fetchBtn">Fetch</button>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label>Upload Local File</label>
+                    <div class="file-upload" id="dropZone">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3>Drag & Drop your Swagger/OpenAPI file here</h3>
+                        <p>or</p>
+                        <button class="btn btn-outline" id="browseBtn">
+                            <i class="fas fa-folder-open"></i> Browse Files
+                        </button>
+                        <p>Supports .json, .yaml, .yml files</p>
+                        <input type="file" id="fileInput" class="file-input" accept=".json,.yaml,.yml">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="error" id="errorMessage"></div>
+            <div class="loading" id="loadingIndicator">
+                <div class="spinner"></div>
+                <p>Processing API specification...</p>
+            </div>
+        </section>
+        
+        <section class="compact-summary" id="summarySection">
+            <div class="summary-container">
+                <div class="summary-item">
+                    <div class="summary-value" id="totalControllers">0</div>
+                    <div class="summary-label">Controllers</div>
+                </div>
+                
+                <div class="summary-divider"></div>
+                
+                <div class="summary-item">
+                    <div class="summary-value" id="totalAPIs">0</div>
+                    <div class="summary-label">Total APIs</div>
+                </div>
+                
+                <div class="summary-divider"></div>
+                
+                <div class="summary-item">
+                    <div class="method-counts" id="methodCounts"></div>
+                    <div class="summary-label">APIs by Method</div>
+                </div>
+                
+                <div class="summary-divider"></div>
+                
+                <div class="summary-item">
+                    <div class="summary-value" id="largestController">-</div>
+                    <div class="summary-label">Largest Controller</div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="controller-summary" id="controllerSection">
+            <h3><i class="fas fa-layer-group"></i> APIs per Controller</h3>
+            <div class="controller-cards" id="controllerCards"></div>
+        </section>
+        
+        <section class="table-section" id="tableSection">
+            <div class="table-header">
+                <div class="search-container">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Search APIs by controller, endpoint, method...">
+                    </div>
+                    <div>
+                        <button class="btn btn-success" id="exportBtn">
+                            <i class="fas fa-file-csv"></i> Export to CSV
+                        </button>
+                        <button class="btn btn-purple" id="toggleControllerBtn">
+                            <i class="fas fa-chart-pie"></i> Show Controller Stats
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="overflow-x: auto;">
+                <table id="apiTable">
+                    <thead>
+                        <tr>
+                            <th width="50">#</th>
+                            <th width="180">Controller</th>
+                            <th width="250">Endpoint</th>
+                            <th width="90">Method</th>
+                            <th width="200">Headers</th>
+                            <th width="200">Path Params</th>
+                            <th width="200">Query Params</th>
+                            <th width="200">Required Fields</th>
+                            <th width="250">Request Body</th>
+                        </tr>
+                    </thead>
+                    <tbody id="apiTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+        
+        <footer class="footer">
+            <p>API Specification Analyzer | Browser-based tool | All processing happens locally</p>
+            <div class="developer-credit">
+                Developed by <a href="https://www.linkedin.com/in/mohammad-atif-khan/" target="_blank">
+                    <i class="fab fa-linkedin"></i> Mohammad Atif Khan
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
